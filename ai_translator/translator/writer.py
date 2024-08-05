@@ -12,15 +12,35 @@ from utils import LOG
 
 class Writer:
     def __init__(self):
-        pass
+        # 获取 ai_translator 目录的路径
+        current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # 定义输出目录为 ai_translator 下的 trans_result 文件夹
+        self.output_dir = os.path.join(current_dir, "trans_results")
+        # 确保输出目录存在
+        os.makedirs(self.output_dir, exist_ok=True)
 
-    def save_translated_book(self, book: Book, ouput_file_format: str):
+    def save_translated_book(self, book: Book, ouput_file_format: str, target_language: str, translation_style: str, translated_pages: int = None):
         LOG.debug(ouput_file_format)
 
+        # Generate the new file name
+        base_name = os.path.basename(book.pdf_file_path)
+        base_name = os.path.splitext(base_name)[0]  # 移除 .pdf 扩展名        
+        LOG.debug(f"Original base name: {base_name}")  # 添加日志
+        file_name_parts = [base_name, target_language]
+
+        if translation_style != "标准":
+            file_name_parts.append(translation_style)
+        if translated_pages is not None:
+            file_name_parts.append(f"{translated_pages}页")
+
+        new_file_name = "_".join(file_name_parts)
+
         if ouput_file_format.lower() == "pdf":
-            output_file_path = self._save_translated_book_pdf(book)
+            output_file_path = os.path.join(self.output_dir, f"{new_file_name}.pdf")
+            self._save_translated_book_pdf(book, output_file_path)
         elif ouput_file_format.lower() == "markdown":
-            output_file_path = self._save_translated_book_markdown(book)
+            output_file_path = os.path.join(self.output_dir, f"{new_file_name}.md")
+            self._save_translated_book_markdown(book, output_file_path)
         else:
             LOG.error(f"不支持文件类型: {ouput_file_format}")
             return ""
@@ -30,10 +50,7 @@ class Writer:
         return output_file_path
 
 
-    def _save_translated_book_pdf(self, book: Book, output_file_path: str = None):
-
-        output_file_path = book.pdf_file_path.replace('.pdf', f'_translated.pdf')
-
+    def _save_translated_book_pdf(self, book: Book, output_file_path: str):
         LOG.info(f"开始导出: {output_file_path}")
 
         # Register Chinese font
@@ -84,9 +101,7 @@ class Writer:
         return output_file_path
 
 
-    def _save_translated_book_markdown(self, book: Book, output_file_path: str = None):
-        output_file_path = book.pdf_file_path.replace('.pdf', f'_translated.md')
-
+    def _save_translated_book_markdown(self, book: Book, output_file_path: str):
         LOG.info(f"开始导出: {output_file_path}")
         with open(output_file_path, 'w', encoding='utf-8') as output_file:
             # Iterate over the pages and contents

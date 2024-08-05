@@ -35,6 +35,8 @@ The OpenAI Translator is still in its early stages of development, and I'm activ
 - [X] Modular and object-oriented design for easy customization and extension.
 - [x] Add support for other languages and translation directions.
 - [x] Implement a graphical user interface (GUI) for easier use.
+- [x] Implement stylized translation
+- [x] Implement translation of first x pages
 - [ ] Create a web service or API to enable usage in web applications.
 - [ ] Add support for batch processing of multiple PDF files.
 - [ ] Add support for preserving the original layout and formatting of the source PDF.
