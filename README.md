@@ -34,7 +34,7 @@ The OpenAI Translator is still in its early stages of development, and I'm activ
 - [X] Timeouts and error handling for robust translation operations.
 - [X] Modular and object-oriented design for easy customization and extension.
 - [x] Add support for other languages and translation directions.
-- [ ] Implement a graphical user interface (GUI) for easier use.
+- [x] Implement a graphical user interface (GUI) for easier use.
 - [ ] Create a web service or API to enable usage in web applications.
 - [ ] Add support for batch processing of multiple PDF files.
 - [ ] Add support for preserving the original layout and formatting of the source PDF.
@@ -45,7 +45,7 @@ The OpenAI Translator is still in its early stages of development, and I'm activ
 
 ### Environment Setup
 
-1.Clone the repository `git clone git@github.com:DjangoPeng/openai-translator.git`.
+1.Clone the repository.
 
 2.The `OpenAI-Translator` requires Python 3.10 or later. Install the dependencies with `pip install -r requirements.txt`.
 
